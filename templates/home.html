@@ -1,0 +1,22 @@
+<h1 class="text-2xl text-sky-400 hover:text-slate-400 my-2">Home</h1>
+<button hx-get="/about" hx-push-url="true" hx-target="._main">go to : about &rarr;</button>
+<div 
+x-data="{ users: JSON.parse(sessionStorage.getItem('users')) || [],
+          addUser(username) { this.users.push(username); sessionStorage.setItem('users', JSON.stringify(this.users)); } 
+        }"
+class="mt-5">
+    <div>Last one added: <span x-text="users.length > 0 ? users[users.length - 1] : 'No users yet'"></span></div>
+    <div class="mt-5">
+        <input type="text" name="username" id="username" class="border-2 border-blue-400 rounded-md p-2" placeholder="Username"/>
+        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        x-on:click="addUser(document.getElementById('username').value); document.getElementById('username').value = '';">
+            + Add
+        </button>
+    </div>
+    <div class="text-xl font-medium mt-3">Our users :</div>
+    <ul>
+        <template x-for="user in users" :key="user">
+            <li class="ms-3 mt-2">&#9673; <span x-text="user"></span></li>
+        </template>
+    </ul>
+</div>

@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'img/django-icon.svg' %}" type="image/x-icon">
+    <!--link href="{% static 'assets/css/output.css' %}" rel="stylesheet" -->
+    <script src="{% static 'assets/tailwind.min.js.gz' %}"></script>
+    <script src="{% static 'assets/htmx.min.js.gz' %}"></script>
+    <script src="{% static 'assets/alpine.min.js.gz' %}" defer></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    {#<title>{% if title != "" %} {{ title }} {% else %} Django + HTMX + Alpine {% endif %}</title>#}
+    <title>Django + HTMX + Alpine</title>
+    <style>
+        /* Basic reset and full-height setup */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            position: relative;
+            /* Make body a relative container for the absolute positioning */
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: #29d;
+            z-index: 1000;
+            transition: width 0.2s, opacity 0.5s;
+        }
+
+        /* Hide the mobile menu by default */
+        #mobile-menu.hidden {
+            display: none;
+        }
+
+        /* Ensure the menu items are displayed as a block for small screens */
+        #mobile-menu a {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="progress-bar"></div>
+
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <button hx-get="/" hx-push-url="true" hx-target="._main" class="text-white text-xl font-bold">MySite</button>
+    
+            <!-- Hamburger Menu Button -->
+            <button id="menu-toggle" class="text-white lg:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+    
+            <!-- Navigation Menu (Desktop) -->
+            <div id="menu" class="hidden lg:flex lg:items-center lg:space-x-6">
+                <button hx-get="/" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Home</button>
+                <button hx-get="/about" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">About</button>
+                <button hx-get="/books" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Books</button>
+                <button hx-get="/images" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Images</button>
+                <button hx-get="/loaded-images" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Loaded Images</button>
+                {% if user.is_authenticated %}
+                <button hx-get="/accounts/profile" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Profile</button>
+                {% else %}
+                <button hx-get="/accounts/login" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</button>
+                {% endif %}
+                <!-- Uncomment if needed -->
+                <!-- <button hx-get="/test" hx-push-url="true" hx-target="._main" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">test</button> -->
+            </div>
+        </div>
+    
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="lg:hidden absolute top-14 left-0 w-full bg-gray-800 z-50 hidden">
+            <button hx-get="/" hx-push-url="true" hx-target="._main" class="block text-white w-full text-left hover:bg-gray-700 px-3 py-4 text-sm font-medium">Home</button>
+            <button hx-get="/about" hx-push-url="true" hx-target="._main" class="block text-white w-full text-left hover:bg-gray-700 px-3 py-4 text-sm font-medium">About</button>
+            <button hx-get="/books" hx-push-url="true" hx-target="._main" class="block text-white w-full text-left hover:bg-gray-700 px-3 py-4 text-sm font-medium">Books</button>
+            <button hx-get="/images" hx-push-url="true" hx-target="._main" class="block text-white w-full text-left hover:bg-gray-700 px-3 py-4 text-sm font-medium">Images</button>
+            {% if user.is_authenticated %}
+            <button hx-get="/accounts/profile" hx-push-url="true" hx-target="._main" class="text-white w-full text-left hover:bg-gray-700 px-3 py-4 mb-3 rounded-md text-sm font-medium">Profile</button>
+            {% else %}
+            <button hx-get="/accounts/profile" hx-push-url="true" hx-target="._main" class="text-white w-full text-left hover:bg-gray-700 px-3 py-4 mb-3 rounded-md text-sm font-medium">Login</button>
+            {% endif %}
+            <!-- Uncomment if needed -->
+            <!-- <button hx-get="/test" hx-push-url="true" hx-target="._main" class="block text-white hover:bg-gray-700 px-3 py-2 text-sm font-medium">test</button> -->
+        </div>
+    </nav>
+    
+
+
+
+    <div class="px-4 sm:px-10">
+        <h1 class="text-center text-4xl text-sky-400 hover:text-slate-400 font-medium pt-5 mb-10">Django + HTMX +
+            Alpine.Js</h1>
+        <main class="_main">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a button inside the menu is clicked
+        document.querySelectorAll('#mobile-menu button').forEach(button => {
+            button.addEventListener('click', function() {
+                var menu = document.getElementById('mobile-menu');
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+
+</html>

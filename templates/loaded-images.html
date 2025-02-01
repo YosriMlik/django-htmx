@@ -1,0 +1,54 @@
+<div class="grid grid-cols-3 gap-3">
+    <div class="relative" id="image1-container">
+        <img class="w-full h-full object-cover lozad" data-src="/static/img/8K/01.jpg" loading="lazy" alt="" id="image1">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" src="" alt="" id="image1-full">
+    </div>
+    <div class="relative" id="image2-container">
+        <img class="w-full h-full object-cover lozad" data-src="/static/img/8K/02.jpg" alt="" id="image2">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" src="" alt="" id="image2-full">
+    </div>
+    <div class="relative" id="image4-container">
+        <img class="w-full h-full object-cover lozad" data-src="/static/img/8K/04.jpg" alt="" id="image4">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" src="" alt="" id="image4-full">
+    </div>
+</div>
+
+<br>
+
+<div class="grid grid-cols-3 gap-3">
+    <div class="relative" id="image3-container">
+        <img class="w-full h-full object-cover lozad" data-src="/static/img/8K/03.jpg" alt="" id="image3">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" src="" alt="" id="image3-full">
+    </div>
+    <div class="relative" id="image5-container">
+        <img class="w-full h-full object-cover lozad" data-src="/static/img/8K/05.jpg" alt="" id="image5">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" src="" alt="" id="image5-full">
+    </div>
+    <div class="relative" id="image6-container">
+        <img class="w-full h-full object-cover lozad" data-src="/static/img/8K/06.jpg" alt="" id="image6">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" src="" alt="" id="image6-full">
+    </div>
+</div>
+<br><br>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+<script>
+    // Initialize Lozad
+    function initLozad() {
+        const observer = lozad('.lozad', {
+            loaded: function (el) {
+                // Add a class or perform other actions when the image is loaded
+                el.classList.add('loaded');
+            }
+        });
+        observer.observe();
+    }
+
+    // Run on initial page load
+    document.addEventListener('DOMContentLoaded', initLozad);
+
+    // Run after HTMX content swap
+    document.addEventListener('htmx:afterSwap', function (event) {
+        initLozad(); // Reinitialize Lozad for new content
+    });
+</script>

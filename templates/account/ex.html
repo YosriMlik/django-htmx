@@ -1,0 +1,37 @@
+<form method="post" action="/accounts/password/change/">
+
+    <input type="hidden" name="csrfmiddlewaretoken"
+        value="dEsIcmSC57aVf9wrER66F9YWPoHfLbLm4NqP5Ynb3rRxA9k5dGTlsxmNbFcajCOo">
+
+    <p>
+        <label for="id_oldpassword">Current Password:</label>
+        <input type="password" name="oldpassword" placeholder="Current Password" autocomplete="current-password"
+            required id="id_oldpassword">
+    </p>
+
+
+    <p>
+        <label for="id_password1">New Password:</label>
+        <input type="password" name="password1" placeholder="New Password" autocomplete="new-password" required
+            aria-describedby="id_password1_helptext" id="id_password1">
+    </p>
+
+
+    <p>
+        <label for="id_password2">New Password (again):</label>
+        <input type="password" name="password2" placeholder="New Password (again)" required id="id_password2">
+    </p>
+
+
+
+
+
+    <button type="submit">
+
+        Change Password
+
+    </button>
+
+    <a href="/accounts/password/reset/">Forgot Password?</a>
+
+</form>

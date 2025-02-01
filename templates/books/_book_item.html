@@ -1,0 +1,10 @@
+<!-- books/_book_item.html -->
+<li class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+    <div>
+        <span class="text-xl font-semibold">{{ book.title }}</span> by {{ book.author }}
+    </div>
+    <div class="space-x-2">
+        <button hx-get="{% url 'book_update' book.id %}" hx-push-url="true" hx-target="._main" class="text-blue-500 hover:underline">Edit</button>
+        <button hx-get="{% url 'book_delete' book.id %}" hx-push-url="true" hx-target="._main" class="text-red-500 hover:underline">Delete</button>
+    </div>
+</li>

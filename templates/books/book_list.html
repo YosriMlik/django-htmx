@@ -1,0 +1,38 @@
+<div class="max-w-4xl mx-auto mt-10">
+    <h1 class="text-3xl font-bold mb-6">Book List</h1>
+    <button onclick="document.getElementById('addBook').showModal();" class="inline-block mb-4 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">
+        + Add New Book
+    </button>
+    <ul id="book-list" class="space-y-4">
+        {% for book in books %}
+            <li class="bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
+                <div class="flex-1">
+                    <span class="text-lg sm:text-xl font-semibold">{{ book.title }}</span>
+                    <span class="block sm:inline">by {{ book.author }}</span>
+                </div>
+                <div class="space-x-0 sm:space-x-2 flex sm:block flex-col sm:flex-row space-y-2 sm:space-y-0">
+                    <button hx-get="/books/{{ book.id }}/edit" hx-push-url="true" hx-target="._main" class="text-blue-500 hover:underline ">
+                        Edit
+                    </button>
+                    <button hx-get="{% url 'book_delete' book.id %}" hx-push-url="true" hx-target="._main" class="text-red-500 hover:underline">
+                        Delete
+                    </button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<dialog id="addBook" class="mt-24 bg-white shadow-md rounded-lg p-6 w-full sm:w-3/5 md:w-1/2 lg:w-1/3">
+    <h1 class="text-2xl font-bold mb-6">{{ form.instance.id|yesno:"Edit Book,Add New Book" }}</h1>   
+    <form id="myForm" hx-post="/books/create" class="space-y-4" hx-target="#book-list" hx-swap="beforeend" hx-on::before-request="document.getElementById('myForm').reset();document.getElementById('addBook').close();">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-24 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+            Save
+        </button>
+        <button onclick="document.getElementById('addBook').close();" class="w-24 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">
+            Cancel
+        </button>
+    </form>
+</dialog>

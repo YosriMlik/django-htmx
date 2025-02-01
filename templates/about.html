@@ -1,0 +1,9 @@
+<h1 class="text-2xl text-sky-400 hover:text-slate-400 my-2">About</h1>
+<button hx-get="/" hx-push-url="true" hx-target="._main">go to : home &rarr;</button>
+{% if username %}
+<p>Welcome, {{ username }}!</p>
+{% else %}
+<p>Welcome, guest!</p>
+{% endif %}
+<p>{{ greeting }}</p>
+<p>{{ description }}</p>

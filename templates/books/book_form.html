@@ -1,0 +1,13 @@
+<div class="max-w-2xl mx-auto mt-10 bg-white shadow-md rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-6">{{ form.instance.id|yesno:"Edit Book,Add New Book" }}</h1>   
+    <form hx-post="" hx-push-url="true" hx-target="._main" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-24 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+            Save
+        </button>
+        <button hx-get="/books" hx-push-url="true" hx-target="._main" class="w-24 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">
+            Cancel
+        </button>
+    </form>
+</div>
